@@ -8,6 +8,23 @@ The main motivation behind **gitoak** is to bridge the gap between conventional 
 
 gitoak  is a free file tree extension for GitHub, available on Chrome, Firefox and Edge.
 
+### How to use gitoak?
+
+1. Install the extension from the Chrome Web Store. (Coming soon)
+2. Clone GitHub repository and build it by yourself.
+    2.1 Build the project
+    ```bash
+    git clone https://github.com/gitoaktools/gitoak.git
+    cd gitoak
+    pnpm install
+    pnpm run build 
+    ```
+    2.2 Load the extension to chrome
+    * Open chrome use `chrome://extensions/`
+    * Click `Load unpacked` and select the `dist_chrome` folder.
+    * Open a GitHub repository page and you will see the GitOak sidebar.
+    
+
 ### Roadmap 🚀
 
 #### Phase 1: Core Implementation
