@@ -27,9 +27,42 @@ export default function FileTree({ repoOwner, repoName, defaultBranch, showHeade
   const [width, setWidth] = useState(250);
 
   useEffect(() => {
+    const CACHE_DURATION = 2 * 60 * 1000; // 2 minutes in milliseconds
+
+    const getCachedData = () => {
+      const cacheKey = `repo_${repoOwner}_${repoName}`;
+      const cachedData = sessionStorage.getItem(cacheKey);
+      if (cachedData) {
+        const { timestamp, data } = JSON.parse(cachedData);
+        console.log("FileTree already cached", timestamp);
+        if (Date.now() - timestamp < CACHE_DURATION) {
+          return data;
+        }
+      }
+      return null;
+    };
+
+    const cacheData = (data: any) => {
+      const cacheKey = `repo_${repoOwner}_${repoName}`;
+      sessionStorage.setItem(cacheKey, JSON.stringify({
+        timestamp: Date.now(),
+        data
+      }));
+    };
+
     const fetchRepoTree = async () => {
       try {
         setLoading(true);
+        
+        // Check cache first
+        const cachedData = getCachedData();
+        if (cachedData) {
+          const processedTree = processTree(cachedData.tree);
+          setTreeData(processedTree);
+          setLoading(false);
+          return;
+        }
+
         // First get the commit SHA for the default branch
         const repoResponse = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}`);
         if (!repoResponse.ok) throw new Error('Failed to fetch repository info');
@@ -81,6 +114,8 @@ export default function FileTree({ repoOwner, repoName, defaultBranch, showHeade
         if (!treeResponse.ok) throw new Error('Failed to fetch repository tree');
         
         const treeData = await treeResponse.json();
+        // Cache the response
+        cacheData(treeData);
         const processedTree = processTree(treeData.tree);
         setTreeData(processedTree);
       } catch (err) {

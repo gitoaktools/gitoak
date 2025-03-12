@@ -1,13 +1,44 @@
 import { createRoot } from 'react-dom/client';
 import './style.css';
 import GitHubFileExplorer from './components/GitHubFileExplorer';
+import { RepoTitleBookmark } from '../../components/RepoTitleBookmark';
+import { FileTitleBookmark } from '@src/components/FileTitleBookmark';
 
 // Only inject on GitHub pages
 if (window.location.hostname === 'github.com') {
-  // Create root container
-  const div = document.createElement('div');
-  div.id = '__github_file_explorer_root';
-  document.body.appendChild(div);
+  const init = () => {
+    // 创建文件浏览器容器
+    if (!document.querySelector('#__github_file_explorer_root')) {
+      const div = document.createElement('div');
+      div.id = '__github_file_explorer_root';
+      document.body.appendChild(div);
+    }
+
+    // 创建书签容器
+    if (!document.querySelector('#__github_bookmark_root')) {
+      const bookmarkContainer = document.createElement('div');
+      bookmarkContainer.id = '__github_bookmark_root';
+      document.body.appendChild(bookmarkContainer);
+    }
+
+    // 渲染组件
+    const rootContainer = document.querySelector('#__github_file_explorer_root');
+    const bookmarkContainer = document.querySelector('#__github_bookmark_root');
+
+    if (rootContainer && bookmarkContainer) {
+      const root = createRoot(rootContainer);
+      root.render(<GitHubFileExplorer />);
+
+      const bookmarkRoot = createRoot(bookmarkContainer);
+      bookmarkRoot.render(<RepoTitleBookmark />);
+
+      const bookmarkRoot1 = createRoot(bookmarkContainer);
+      bookmarkRoot1.render(<FileTitleBookmark />);
+    }
+  };
+
+  // 初始化
+  init();
 
   // Adjust GitHub's layout to make room for our sidebar
   const adjustGitHubLayout = () => {
@@ -55,19 +86,15 @@ if (window.location.hostname === 'github.com') {
 
   observer.observe(document.body, { childList: true, subtree: true });
 
-  // Render our component
-  const rootContainer = document.querySelector('#__github_file_explorer_root');
-  if (!rootContainer) throw new Error("Can't find Content root element");
-  
   // Check if sidebar is pinned and update container class accordingly
   chrome.storage.local.get(['fileExplorerPinned'], (result) => {
     if (result.fileExplorerPinned) {
-      rootContainer.classList.add('pinned-container');
+      const rootContainer = document.querySelector('#__github_file_explorer_root');
+      if (rootContainer) {
+        rootContainer.classList.add('pinned-container');
+      }
     }
   });
-  
-  const root = createRoot(rootContainer);
-  root.render(<GitHubFileExplorer />);
 
   try {
     console.log('GitHub File Explorer loaded');

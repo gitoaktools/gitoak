@@ -1,9 +1,14 @@
 /**
  * Extracts repository owner and name from GitHub URL
  */
-export function extractRepoInfo(url: string): { owner: string; repo: string; branch: string | null } | null {
-  // Match GitHub repository URLs
-  const githubRegex = /github\.com\/([^/]+)\/([^/]+)(?:\/(?:tree|blob)\/([^/]+))?/;
+export function extractRepoInfo(
+  url: string,
+  repoOnly: boolean = false
+): { owner: string; repo: string; branch: string | null } | null {
+  // Match GitHub repository URLs, with optional path capture
+  const githubRegex = repoOnly
+    ? /github\.com\/([^/]+)\/([^/]+)/
+    : /github\.com\/([^/]+)\/([^/]+)(?:\/(?:tree|blob)\/([^/]+))?/;
   const match = url.match(githubRegex);
   
   if (!match) return null;
@@ -11,8 +16,15 @@ export function extractRepoInfo(url: string): { owner: string; repo: string; bra
   return {
     owner: match[1],
     repo: match[2].replace('.git', '').replace(/#.*$/, ''),
-    branch: match[3] || null
+    branch: repoOnly ? null : (match[3] || null)
   };
+}
+
+export function extractFileInfo(url: string): string {
+  if (url.includes('https://github.com/')) {
+    return url.replace('https://github.com/', '');
+  }
+  return url;
 }
 
 /**

@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Settings, Pin, X, GitBranch } from 'lucide-react';
+import { Settings, Pin, X, GitBranch, Bookmark, Library } from 'lucide-react';
 import FileTree from './FileTree';
 import { extractRepoInfo, isGitHubRepoPage, getDefaultBranch } from '../utils/github';
 import SettingsPanel from './SettingsPanel';
+import { BookmarksList } from '../../../components/BookmarksList';
 
 export default function GitHubFileExplorer() {
   const [isOpen, setIsOpen] = useState(true);
@@ -15,6 +16,7 @@ export default function GitHubFileExplorer() {
   const [menuPosition, setMenuPosition] = useState({ 
     top: typeof window !== 'undefined' ? Math.max(0, (window.innerHeight - 60) / 2) : 0 
   });
+  const [showBookmarks, setShowBookmarks] = useState(false);
 
   useEffect(() => {
     const loadSavedState = async () => {
@@ -190,9 +192,9 @@ export default function GitHubFileExplorer() {
             <div className="flex items-center justify-between p-3 border-b border-gray-200 dark:border-gray-700 bg-inherit">
               <div>
                 <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                  {showSettings ? "Settings" : `${repoInfo.owner}/${repoInfo.repo}`}
+                  {showSettings ? "Settings" : showBookmarks ? "Bookmarks" : `${repoInfo.owner}/${repoInfo.repo}`}
                 </h4>
-                {!showSettings && (
+                {!showSettings && !showBookmarks && (
                   <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
                     <GitBranch size={12} />
                     {repoInfo.branch || defaultBranch}
@@ -200,6 +202,18 @@ export default function GitHubFileExplorer() {
                 )}
               </div>
               <div className="flex items-center space-x-2">
+                
+                <button 
+                  onClick={() => {
+                    setShowBookmarks(prev => !prev);
+                    setShowSettings(false);
+                  }}
+                  className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
+                  title="View bookmarks"
+                >
+                  <Bookmark size={16} className={showBookmarks ? "text-blue-500" : ""} />
+                </button>
+
                 <button 
                   onClick={toggleSettings}
                   className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -227,6 +241,8 @@ export default function GitHubFileExplorer() {
             <div className="h-[calc(100%-48px)] overflow-auto bg-inherit">
               {showSettings ? (
                 <SettingsPanel />
+              ) : showBookmarks ? (
+                <BookmarksList />
               ) : (
                 <FileTree 
                   repoOwner={repoInfo.owner} 
@@ -255,7 +271,8 @@ export default function GitHubFileExplorer() {
           title="Show sidebar (drag to move)"
           style={{ top: `${menuPosition.top}px` }}
         >
-          <div className="rotate-270 transform origin-center text-gray-600 dark:text-gray-400 text-sm font-medium whitespace-nowrap">
+          <div className="rotate-270 transform origin-center text-gray-600 dark:text-gray-400 text-sm font-medium whitespace-nowrap flex items-center gap-2">
+            <Library size={16} />
             GitOak
           </div>
         </div>
