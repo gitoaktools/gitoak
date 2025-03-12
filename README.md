@@ -1,12 +1,25 @@
-# gitoak
-**gitoak** is a free file tree extension for GitHub, available on Chrome, Firefox and Edge.
+# Gitoak
+**Gitoak** is a free file tree extension for GitHub, available on Chrome, Firefox and Edge.
 
 ## Introduction
-**gitoak** was developed with the vision of enhancing GitHub repository navigation by seamlessly integrating AI capabilities with the traditional file tree experience. Inspired by popular extensions like Octotree, Gitako, and Span-tree, GitOak takes the file navigation experience to the next level by incorporating AI-powered features.
+**Gitoak** was developed with the vision of enhancing GitHub repository navigation by seamlessly integrating AI capabilities with the traditional file tree experience. Inspired by popular extensions like Octotree, Gitako, and Span-tree, GitOak takes the file navigation experience to the next level by incorporating AI-powered features.
 
-The main motivation behind **gitoak** is to bridge the gap between conventional GitHub repository browsing and modern AI assistance. While existing solutions like Octotree provide excellent file tree navigation, GitOak aims to enhance this experience by leveraging AI to help developers better understand, navigate, and interact with code repositories.
+The main motivation behind **Gitoak** is to bridge the gap between conventional GitHub repository browsing and modern AI assistance. While existing solutions like Octotree provide excellent file tree navigation, GitOak aims to enhance this experience by leveraging AI to help developers better understand, navigate, and interact with code repositories.
 
 gitoak  is a free file tree extension for GitHub, available on Chrome, Firefox and Edge.
+
+
+
+Gitoak UI Demo:
+
+![](./public/demo/ui-bookmark-01.png)
+
+### Update log:
+
+​    20250312:  Add bookmark, only support localstoarge.
+
+​	20250311: update source code.
+
 
 ### How to use gitoak?
 
@@ -28,9 +41,9 @@ gitoak  is a free file tree extension for GitHub, available on Chrome, Firefox a
 ### Roadmap 🚀
 
 #### Phase 1: Core Implementation
-- [ ] Develop basic file tree functionality
-- [ ] Implement GitHub repository navigation
-- [ ] Create browser extension infrastructure
+- [x] Develop basic file tree functionality
+- [x] Implement GitHub repository navigation
+- [x] Create browser extension infrastructure
 - [ ] Support for Chrome, Firefox, and Edge browsers
 
 #### Phase 2: AI Integration with Vercel SDK
@@ -47,6 +60,9 @@ gitoak  is a free file tree extension for GitHub, available on Chrome, Firefox a
 #### Phase 4: Enhanced User Experience
 - [ ] Data synchronization across devices
 - [ ] Smart bookmarking system
+  - [x] bookmark with localstorage
+  - [ ] bookmark with backend storage sync all device
+
 - [ ] Repository exploration features
 - [ ] Personalized navigation history
 
