@@ -3,6 +3,8 @@ import './style.css';
 import GitHubFileExplorer from './components/GitHubFileExplorer';
 import { RepoTitleBookmark } from '../../components/RepoTitleBookmark';
 import { FileTitleBookmark } from '@src/components/FileTitleBookmark';
+import { IssueTitleBookmark } from '@src/components/IssueTitleBookmark';
+import { PullRequestTitleBookmark } from '@src/components/PullRequestTitleBookmark';
 
 // Only inject on GitHub pages
 if (window.location.hostname === 'github.com') {
@@ -34,6 +36,12 @@ if (window.location.hostname === 'github.com') {
 
       const bookmarkRoot1 = createRoot(bookmarkContainer);
       bookmarkRoot1.render(<FileTitleBookmark />);
+
+      const bookmarkRoot2 = createRoot(bookmarkContainer);
+      bookmarkRoot2.render(<IssueTitleBookmark />);
+
+      const bookmarkRoot3 = createRoot(bookmarkContainer);
+      bookmarkRoot3.render(<PullRequestTitleBookmark />);
     }
   };
 

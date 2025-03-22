@@ -6,7 +6,7 @@ interface BookmarkButtonProps {
   owner: string;
   repo: string;
   repoOnly?: boolean;
-  bookmarkType: 'repo' | 'file';
+  bookmarkType: 'repo' | 'file' | 'issue'|'pr';
 }
 
 export function BookmarkButton({ owner, repo, bookmarkType, repoOnly = true }: BookmarkButtonProps) {

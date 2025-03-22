@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Settings, Pin, X, GitBranch, Bookmark, Library } from 'lucide-react';
+import { Settings, Pin, X, GitBranch, Bookmark, Library, Search, MessageSquare } from 'lucide-react';
 import FileTree from './FileTree';
 import { extractRepoInfo, isGitHubRepoPage, getDefaultBranch } from '../utils/github';
 import SettingsPanel from './SettingsPanel';
 import { BookmarksList } from '../../../components/BookmarksList';
+import { FileSearch } from './FileSearch';
+import { ChatWindow } from './ChatWindow';
 
 export default function GitHubFileExplorer() {
   const [isOpen, setIsOpen] = useState(true);
@@ -17,6 +19,8 @@ export default function GitHubFileExplorer() {
     top: typeof window !== 'undefined' ? Math.max(0, (window.innerHeight - 60) / 2) : 0 
   });
   const [showBookmarks, setShowBookmarks] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+  const [showChat, setShowChat] = useState(false);
 
   useEffect(() => {
     const loadSavedState = async () => {
@@ -192,49 +196,77 @@ export default function GitHubFileExplorer() {
             <div className="flex items-center justify-between p-3 border-b border-gray-200 dark:border-gray-700 bg-inherit">
               <div>
                 <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                  {showSettings ? "Settings" : showBookmarks ? "Bookmarks" : `${repoInfo.owner}/${repoInfo.repo}`}
+                  {showSettings ? "Settings" : showBookmarks ? "Bookmarks" : showSearch ? "Search" : showChat ? "Chat(Coming Soon)" : `${repoInfo.owner}/${repoInfo.repo}`}
                 </h4>
-                {!showSettings && !showBookmarks && (
+                {!showSettings && !showBookmarks && !showSearch && !showChat && (
                   <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
                     <GitBranch size={12} />
                     {repoInfo.branch || defaultBranch}
                   </div>
                 )}
               </div>
-              <div className="flex items-center space-x-2">
-                
-                <button 
-                  onClick={() => {
-                    setShowBookmarks(prev => !prev);
-                    setShowSettings(false);
-                  }}
-                  className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
-                  title="View bookmarks"
-                >
-                  <Bookmark size={16} className={showBookmarks ? "text-blue-500" : ""} />
-                </button>
-
-                <button 
-                  onClick={toggleSettings}
-                  className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
-                  title="Toggle settings"
-                >
-                  <Settings size={16} className={showSettings ? "text-blue-500" : ""} />
-                </button>
-                <button 
-                  onClick={() => setIsPinned(!isPinned)}
-                  className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
-                  title={isPinned ? "Unpin sidebar (Ctrl+Shift+P)" : "Pin sidebar to page (Ctrl+Shift+P)"}
-                >
-                  <Pin size={16} className={isPinned ? "text-blue-500" : ""} />
-                </button>
-                <button 
-                  onClick={() => setIsOpen(false)}
-                  className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
-                  title="Close sidebar"
-                >
-                  <X size={16} />
-                </button>
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center space-x-2">
+                  <button 
+                    onClick={() => {
+                      setShowBookmarks(prev => !prev);
+                      setShowSettings(false);
+                      setShowSearch(false);
+                      setShowChat(false);
+                    }}
+                    className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
+                    title="View bookmarks"
+                  >
+                    <Bookmark size={16} className={showBookmarks ? "text-blue-500" : ""} />
+                  </button>
+                  <button 
+                    onClick={toggleSettings}
+                    className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
+                    title="Toggle settings"
+                  >
+                    <Settings size={16} className={showSettings ? "text-blue-500" : ""} />
+                  </button>
+                  <button 
+                    onClick={() => setIsPinned(!isPinned)}
+                    className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
+                    title={isPinned ? "Unpin sidebar (Ctrl+Shift+P)" : "Pin sidebar to page (Ctrl+Shift+P)"}
+                  >
+                    <Pin size={16} className={isPinned ? "text-blue-500" : ""} />
+                  </button>
+                  <button 
+                    onClick={() => setIsOpen(false)}
+                    className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
+                    title="Close sidebar"
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <button 
+                    onClick={() => {
+                      setShowSearch(prev => !prev);
+                      setShowSettings(false);
+                      setShowBookmarks(false);
+                      setShowChat(false);
+                    }}
+                    className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
+                    title="Search files"
+                  >
+                    <Search size={16} className={showSearch ? "text-blue-500" : ""} />
+                  </button>
+                  <button 
+                    onClick={() => {
+                      setShowChat(prev => !prev);
+                      setShowSettings(false);
+                      setShowBookmarks(false);
+                      setShowSearch(false);
+                    }}
+                    className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
+                    title="Open chat"
+                  >
+                    <MessageSquare size={16} className={showChat ? "text-blue-500" : ""} />
+                  </button>
+                </div>
               </div>
             </div>
             
@@ -243,6 +275,18 @@ export default function GitHubFileExplorer() {
                 <SettingsPanel />
               ) : showBookmarks ? (
                 <BookmarksList />
+              ) : showSearch ? (
+                <FileSearch 
+                  repoOwner={repoInfo.owner}
+                  repoName={repoInfo.repo}
+                  defaultBranch={repoInfo.branch || defaultBranch}
+                />
+              ) : showChat ? (
+                <ChatWindow 
+                  repoOwner={repoInfo.owner}
+                  repoName={repoInfo.repo}
+                  onClose={() => setShowChat(false)}
+                />
               ) : (
                 <FileTree 
                   repoOwner={repoInfo.owner} 
