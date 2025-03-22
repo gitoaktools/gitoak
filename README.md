@@ -14,11 +14,17 @@ Gitoak UI Demo:
 
 ![](./public/demo/ui-bookmark-01.png)
 
+![](./public/demo/ui-bookmark-02.png)
+
+![](./public/demo/ui-bookmark-03.png)
+
 ### Update log:
 
-​    20250312:  Add bookmark, only support localstoarge.
+ 20250322: Add issue,pull request bookmark support, add bookmark filter.
+ 
+​ 20250312: Add bookmark, only support localstoarge.
 
-​	20250311: update source code.
+​	20250311: Update source code.
 
 
 ### How to use gitoak?
