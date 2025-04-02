@@ -14,17 +14,29 @@ Gitoak UI Demo:
 
 ![](./public/demo/ui-bookmark-01.png)
 
+Search:
+
 ![](./public/demo/ui-bookmark-02.png)
+
+Bookmarks
 
 ![](./public/demo/ui-bookmark-03.png)
 
+AI Chat:
+
+![](./public/demo/ui-bookmark-04.png)
+
+![](./public/demo/ui-bookmark-05.png)
+
 ### Update log:
 
- 20250322: Add issue,pull request bookmark support, add bookmark filter.
- 
-​ 20250312: Add bookmark, only support localstoarge.
+ 20250402:  Add AI chat support, all configs are stored in Chrome localStorage 'aiSettings'".
 
-​	20250311: Update source code.
+ 20250322: Add issue,pull request bookmark support, add bookmark filter.
+
+ 20250312: Add bookmark, only support localstoarge.
+
+ 20250311: Update source code.
 
 
 ### How to use gitoak?
@@ -44,6 +56,15 @@ Gitoak UI Demo:
     * Open a GitHub repository page and you will see the GitOak sidebar.
     
 
+
+
+### How about security ?
+
+1. This is an open-source project, so you can check all the source code.
+2. OAuth tokens or personal access tokens are only stored in Chrome's localStorage, as GitHub requires token authentication for API access.
+3. All AI settings are stored in Chrome's localStorage as well.
+
+
 ### Roadmap 🚀
 
 #### Phase 1: Core Implementation
@@ -53,7 +74,7 @@ Gitoak UI Demo:
 - [ ] Support for Chrome, Firefox, and Edge browsers
 
 #### Phase 2: AI Integration with Vercel SDK
-- [ ] Integrate Vercel AI SDK
+- [x] Integrate Vercel AI SDK
 - [ ] Implement code summarization features
 - [ ] Add repository overview generation
 

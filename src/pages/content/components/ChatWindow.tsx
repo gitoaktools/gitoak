@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { generateText } from 'ai';
 import { AISettings, getModel, OllamaSettings } from '../utils/ai';
 import { createOllama } from 'ollama-ai-provider';
+import ReactMarkdown from 'react-markdown';
 
-type AIProvider = 'anthropic' | 'openai' | 'ollama' | 'bedrock';
+type AIProvider = 'anthropic' | 'openai' | 'ollama' | 'amazonbedrock';
 
 interface ChatWindowProps {
   repoOwner: string;
@@ -115,7 +116,9 @@ export function ChatWindow({ repoOwner, repoName, defaultBranch,onClose,showSett
                 : 'bg-gray-100 dark:bg-gray-800 mr-auto'
             } max-w-[80%]`}
           >
-              {msg.text} 
+            <div className="prose dark:prose-invert max-w-none">
+              <ReactMarkdown>{msg.text}</ReactMarkdown>
+            </div>
           </div>
         ))}
       </div>)}
