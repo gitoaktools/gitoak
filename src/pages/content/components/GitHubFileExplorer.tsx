@@ -41,6 +41,11 @@ export default function GitHubFileExplorer() {
       if (result.fileExplorerPinned) {
         document.body.classList.add('with-sidebar');
       }
+
+      if (window.location.pathname.startsWith('/login')) {
+        setIsPinned(false);
+        setIsOpen(false);
+      }
     };
 
     loadSavedState();
@@ -196,7 +201,7 @@ export default function GitHubFileExplorer() {
             <div className="flex items-center justify-between p-3 border-b border-gray-200 dark:border-gray-700 bg-inherit">
               <div>
                 <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                  {showSettings ? "Settings" : showBookmarks ? "Bookmarks" : showSearch ? "Search" : showChat ? "Chat(Coming Soon)" : `${repoInfo.owner}/${repoInfo.repo}`}
+                  {showSettings ? "Settings" : showBookmarks ? "Bookmarks" : showSearch ? "Search" : showChat ? "Chat" : `${repoInfo.owner}/${repoInfo.repo}`}
                 </h4>
                 {!showSettings && !showBookmarks && !showSearch && !showChat && (
                   <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
@@ -283,9 +288,17 @@ export default function GitHubFileExplorer() {
                 />
               ) : showChat ? (
                 <ChatWindow 
+                  defaultBranch={repoInfo.branch || defaultBranch}
                   repoOwner={repoInfo.owner}
                   repoName={repoInfo.repo}
-                  onClose={() => setShowChat(false)}
+                  onClose={() => {
+                    setShowChat(false)
+                  }}
+                  showSettings={() => {
+                    setShowChat(false)
+                    setShowSettings(true)
+                  }}
+                  
                 />
               ) : (
                 <FileTree 

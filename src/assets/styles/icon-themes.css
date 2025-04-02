@@ -1,0 +1,146 @@
+/* VSCode Theme */
+[data-icon-theme="vscode"] .folder-icon {
+  color: #c5c5c5;
+}
+
+[data-icon-theme="vscode"] .file-icon {
+  color: #c5c5c5;
+}
+
+[data-icon-theme="vscode"] .folder-icon[data-folder-type="src"] {
+  color: #c5c5c5;
+}
+
+[data-icon-theme="vscode"] .folder-icon[data-folder-type="test"] {
+  color: #c5c5c5;
+}
+
+[data-icon-theme="vscode"] .file-icon[data-file-type="ts"] {
+  color: #3178c6;
+}
+
+[data-icon-theme="vscode"] .file-icon[data-file-type="tsx"] {
+  color: #3178c6;
+}
+
+[data-icon-theme="vscode"] .file-icon[data-file-type="js"] {
+  color: #f1e05a;
+}
+
+[data-icon-theme="vscode"] .file-icon[data-file-type="jsx"] {
+  color: #f1e05a;
+}
+
+[data-icon-theme="vscode"] .file-icon[data-file-type="json"] {
+  color: #f1e05a;
+}
+
+[data-icon-theme="vscode"] .file-icon[data-file-type="css"] {
+  color: #563d7c;
+}
+
+[data-icon-theme="vscode"] .file-icon[data-file-type="html"] {
+  color: #e34c26;
+}
+
+[data-icon-theme="vscode"] .file-icon[data-file-type="md"] {
+  color: #083fa1;
+}
+
+/* VSCode Material Theme */
+[data-icon-theme="vscode-material"] .folder-icon {
+  color: #ffb62c;
+}
+
+[data-icon-theme="vscode-material"] .file-icon {
+  color: #89ddff;
+}
+
+[data-icon-theme="vscode-material"] .folder-icon[data-folder-type="src"] {
+  color: #ffb62c;
+}
+
+[data-icon-theme="vscode-material"] .folder-icon[data-folder-type="test"] {
+  color: #ffb62c;
+}
+
+[data-icon-theme="vscode-material"] .file-icon[data-file-type="ts"] {
+  color: #89ddff;
+}
+
+[data-icon-theme="vscode-material"] .file-icon[data-file-type="tsx"] {
+  color: #89ddff;
+}
+
+[data-icon-theme="vscode-material"] .file-icon[data-file-type="js"] {
+  color: #ffcb6b;
+}
+
+[data-icon-theme="vscode-material"] .file-icon[data-file-type="jsx"] {
+  color: #ffcb6b;
+}
+
+[data-icon-theme="vscode-material"] .file-icon[data-file-type="json"] {
+  color: #ffcb6b;
+}
+
+[data-icon-theme="vscode-material"] .file-icon[data-file-type="css"] {
+  color: #82aaff;
+}
+
+[data-icon-theme="vscode-material"] .file-icon[data-file-type="html"] {
+  color: #f07178;
+}
+
+[data-icon-theme="vscode-material"] .file-icon[data-file-type="md"] {
+  color: #89ddff;
+}
+
+/* Classic Theme */
+[data-icon-theme="classic"] .folder-icon {
+  color: #ffd700;
+}
+
+[data-icon-theme="classic"] .file-icon {
+  color: #ffffff;
+}
+
+[data-icon-theme="classic"] .folder-icon[data-folder-type="src"] {
+  color: #ffd700;
+}
+
+[data-icon-theme="classic"] .folder-icon[data-folder-type="test"] {
+  color: #ffd700;
+}
+
+[data-icon-theme="classic"] .file-icon[data-file-type="ts"] {
+  color: #3178c6;
+}
+
+[data-icon-theme="classic"] .file-icon[data-file-type="tsx"] {
+  color: #3178c6;
+}
+
+[data-icon-theme="classic"] .file-icon[data-file-type="js"] {
+  color: #f1e05a;
+}
+
+[data-icon-theme="classic"] .file-icon[data-file-type="jsx"] {
+  color: #f1e05a;
+}
+
+[data-icon-theme="classic"] .file-icon[data-file-type="json"] {
+  color: #f1e05a;
+}
+
+[data-icon-theme="classic"] .file-icon[data-file-type="css"] {
+  color: #563d7c;
+}
+
+[data-icon-theme="classic"] .file-icon[data-file-type="html"] {
+  color: #e34c26;
+}
+
+[data-icon-theme="classic"] .file-icon[data-file-type="md"] {
+  color: #ffffff;
+} 

@@ -58,7 +58,9 @@ if (window.location.hostname === 'github.com') {
       
       const isRepoPage = window.location.pathname.split('/').length >= 3 && 
                         !window.location.pathname.startsWith('/settings') &&
-                        !window.location.pathname.startsWith('/marketplace');
+                        !window.location.pathname.startsWith('/marketplace')&&
+                        !window.location.pathname.startsWith('/login');
+      console.log('isRepoPage',isRepoPage);
       
       if (isRepoPage) {
         // Find GitHub's containers
