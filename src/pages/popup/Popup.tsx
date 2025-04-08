@@ -11,8 +11,10 @@ export default function Popup() {
           Your intelligent Git assistant for simpler and more efficient code management
         </p>
         <div className="space-y-4">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors">
-            Get Started
+          <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors" onClick={() => {
+           window.open('https://gitoak.com/', '_blank');
+          }}>
+            Get Started 
           </button>
           <div className="flex gap-4 mt-4 mb-2">
             <a

@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Settings, Pin, X, GitBranch, Bookmark, Library, Search, MessageSquare } from 'lucide-react';
+import { Settings, Pin, X, GitBranch, Bookmark, Library, Search, MessageSquare, GitPullRequest } from 'lucide-react';
 import FileTree from './FileTree';
 import { extractRepoInfo, isGitHubRepoPage, getDefaultBranch } from '../utils/github';
 import SettingsPanel from './SettingsPanel';
 import { BookmarksList } from '../../../components/BookmarksList';
 import { FileSearch } from './FileSearch';
 import { ChatWindow } from './ChatWindow';
+import { PullRequest } from './PullRequest';
 
 export default function GitHubFileExplorer() {
   const [isOpen, setIsOpen] = useState(true);
@@ -21,6 +22,7 @@ export default function GitHubFileExplorer() {
   const [showBookmarks, setShowBookmarks] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [showChat, setShowChat] = useState(false);
+  const [showPullRequest, setShowPullRequest] = useState(false);
 
   useEffect(() => {
     const loadSavedState = async () => {
@@ -49,7 +51,16 @@ export default function GitHubFileExplorer() {
     };
 
     loadSavedState();
+    setShowPullRequest(window.location.href.includes('pull/'));
+    if (window.location.href.includes('pull/')) {
+      setShowSearch(false);
+      setShowSettings(false);
+      setShowBookmarks(false);
+      setShowChat(false);
+    }
   }, []);
+
+
 
   useEffect(() => {
     const saveState = async () => {
@@ -122,9 +133,10 @@ export default function GitHubFileExplorer() {
         setIsPinned(prev => !prev);
       }
     };
-
+    
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
+    
   }, []);
 
   const handleDragStart = (e: React.MouseEvent) => {
@@ -176,9 +188,40 @@ export default function GitHubFileExplorer() {
     setShowSettings(prev => !prev);
   };
 
+
+  console.log('showPullRequest',showPullRequest);
+
   if (!isGitHubRepoPage() || !repoInfo) {
     return null;
   }
+
+  const handlePanelVisibility = (panel: 'settings' | 'bookmarks' | 'search' | 'chat' | 'pullRequest') => {
+    // Reset all panels first
+    setShowSettings(false);
+    setShowBookmarks(false);
+    setShowSearch(false);
+    setShowChat(false);
+    setShowPullRequest(false);
+
+    // Show the selected panel
+    switch (panel) {
+      case 'settings':
+        setShowSettings(true);
+        break;
+      case 'bookmarks':
+        setShowBookmarks(true);
+        break;
+      case 'search':
+        setShowSearch(true);
+        break;
+      case 'chat':
+        setShowChat(true);
+        break;
+      case 'pullRequest':
+        setShowPullRequest(true);
+        break;
+    }
+  };
 
   return (
     <>
@@ -261,6 +304,19 @@ export default function GitHubFileExplorer() {
                   </button>
                   <button 
                     onClick={() => {
+                      setShowPullRequest(prev => !prev);
+                      setShowSettings(false);
+                      setShowBookmarks(false);
+                      setShowSearch(false);
+                      setShowChat(false);
+                    }}
+                    className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
+                    title="View pull request"
+                  >
+                    <GitPullRequest size={16} className={showPullRequest ? "text-blue-500" : ""} />
+                  </button>
+                  <button 
+                    onClick={() => {
                       setShowChat(prev => !prev);
                       setShowSettings(false);
                       setShowBookmarks(false);
@@ -300,6 +356,8 @@ export default function GitHubFileExplorer() {
                   }}
                   
                 />
+              ) : showPullRequest ? (
+                <PullRequest onShowPanel={handlePanelVisibility}/>
               ) : (
                 <FileTree 
                   repoOwner={repoInfo.owner} 
@@ -307,6 +365,7 @@ export default function GitHubFileExplorer() {
                   defaultBranch={repoInfo.branch || defaultBranch}
                   showHeader={false}
                 />
+                
               )}
             </div>
             
@@ -338,6 +397,8 @@ export default function GitHubFileExplorer() {
       {isDragging && (
         <div className="fixed inset-0 z-[101] cursor-col-resize" />
       )}
+
+     
     </>
   );
 }

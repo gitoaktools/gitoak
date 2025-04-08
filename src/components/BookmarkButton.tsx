@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Bookmark } from 'lucide-react';
+import { Bookmark,BookmarkCheck } from 'lucide-react';
 import { BookmarkService } from '../services/bookmarkService';
 
 interface BookmarkButtonProps {
@@ -44,7 +44,10 @@ export function BookmarkButton({ owner, repo, bookmarkType, repoOnly = true }: B
       }
       setIsBookmarked(!isBookmarked);
 
-      // 验证存储
+      // Trigger custom event to notify BookmarksList to update
+      window.dispatchEvent(new CustomEvent('bookmarksUpdated'));
+      
+      // Verify storage
       const bookmarks = await BookmarkService.getBookmarks();
       console.log('Current bookmarks in storage:', bookmarks);
     } catch (error) {
@@ -71,11 +74,8 @@ export function BookmarkButton({ owner, repo, bookmarkType, repoOnly = true }: B
       }}
       title={isBookmarked ? "Remove from bookmarks" : "Add to bookmarks"}
     >
-      <Bookmark 
-        size={16} 
-        className={isBookmarked ? "color-fg-accent" : ""}
-        style={{ verticalAlign: 'text-bottom' }}
-      />
+    {isBookmarked ? <BookmarkCheck size={16} className="color-fg-accent" style={{ verticalAlign: 'text-bottom' }} /> : <Bookmark size={16}  style={{ verticalAlign: 'text-bottom' }} />}
+     
     </button>
   );
 } 

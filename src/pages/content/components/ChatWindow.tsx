@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { generateText } from 'ai';
-import { AISettings, getModel, OllamaSettings } from '../utils/ai';
-import { createOllama } from 'ollama-ai-provider';
+import { AISettings, getModel } from '../utils/ai';
 import ReactMarkdown from 'react-markdown';
 
 type AIProvider = 'anthropic' | 'openai' | 'ollama' | 'amazonbedrock';

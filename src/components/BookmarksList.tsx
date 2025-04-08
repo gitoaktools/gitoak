@@ -15,6 +15,19 @@ export function BookmarksList() {
     loadBookmarks();
   }, []);
 
+  useEffect(() => {
+    const handleBookmarksUpdate = () => {
+      // Reload bookmarks list
+      loadBookmarks();
+    };
+
+    window.addEventListener('bookmarksUpdated', handleBookmarksUpdate);
+
+    return () => {
+      window.removeEventListener('bookmarksUpdated', handleBookmarksUpdate);
+    };
+  }, []);
+
   const loadBookmarks = async (): Promise<void> => {
     const data = await BookmarkService.getBookmarks();
     console.log(data);

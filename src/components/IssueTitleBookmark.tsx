@@ -4,8 +4,7 @@ import { BookmarkButton } from './BookmarkButton';
 import { extractRepoInfo } from '../pages/content/utils/github';
 
 export function IssueTitleBookmark() {
-  const [mounted, setMounted] = useState(false);
-
+  
   useEffect(() => {
     const injectBookmarkButton = () => {
       const repoInfo = extractRepoInfo(window.location.href);
@@ -16,7 +15,7 @@ export function IssueTitleBookmark() {
       if (existingButton) return;
 
       // Find the target insertion position - issue title span
-      const issueTitleElement = document.querySelector('div[data-component="TitleArea"] > h1');
+      const issueTitleElement = document.querySelector('div[data-testid="issue-header"] h1[data-component="PH_Title"]');
       if (!issueTitleElement) return;
       
       // Create container and inject button

@@ -28,7 +28,14 @@ AI Chat:
 
 ![](./public/demo/ui-bookmark-05.png)
 
+Pull Request:
+
+![](./public/demo/ui-bookmark-06.png)
+
+
 ### Update log:
+
+ 20250408: Add pull request quick summary.
 
  20250402:  Add AI chat support, all configs are stored in Chrome localStorage 'aiSettings'".
 
