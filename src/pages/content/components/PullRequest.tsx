@@ -85,7 +85,17 @@ export function PullRequest({onShowPanel}:ChildComponentProps) {
         setHasSettings(true);
       }
     };
+    const checkAuth = async () => {
+      const accessToken = await  localStorage.getItem('accessToken');
+      if (!accessToken) {
+        setError('GitHub token not found. Please set up your token in settings.');
+        setLoading(false);
+        return;
+      }
+      setAuth(true);
+    }
     loadAiSettings();
+    checkAuth();
   }, []);
 
 
@@ -94,9 +104,11 @@ export function PullRequest({onShowPanel}:ChildComponentProps) {
     const url = window.location.href;
     const match = url.match(/github\.com\/([^/]+)\/([^/]+)\/pull\/(\d+)/);
     
+    
     if (match) {
       const [, owner, repo, number] = match;
-      setParams({ owner, repo, number });
+      setParams({ owner, repo, number });  
+     
     } else {
       setError('Invalid GitHub pull request URL');
       setLoading(false);
@@ -110,13 +122,14 @@ export function PullRequest({onShowPanel}:ChildComponentProps) {
     const fetchPRData = async () => {
       try {
         const accessToken = await  localStorage.getItem('accessToken');
+        
         if (!accessToken) {
           setError('GitHub token not found. Please set up your token in settings.');
           setLoading(false);
           return;
         }
 
-        setAuth(true);
+        
 
         const headers = {
           Authorization: `Bearer ${accessToken}`,

@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { generateText } from 'ai';
+import { generateText ,experimental_createMCPClient} from 'ai';
 import { AISettings, getModel } from '../utils/ai';
 import ReactMarkdown from 'react-markdown';
+import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 
 type AIProvider = 'anthropic' | 'openai' | 'ollama' | 'amazonbedrock';
 
@@ -26,6 +27,8 @@ export function ChatWindow({ repoOwner, repoName, defaultBranch,onClose,showSett
   const [includePageContent, setIncludePageContent] = useState(false);
   const [pageContent, setPageContent] = useState<string>('');
   const [useJinaReader, setUseJinaReader] = useState(true);
+  const [mcpServerList, setMcpServerList] = useState<Array<{url: string}>>([]);
+  const [tools, setTools] = useState<any>();
   
   useEffect(() => {
     const loadAiSettings = async () => {
@@ -39,6 +42,38 @@ export function ChatWindow({ repoOwner, repoName, defaultBranch,onClose,showSett
       }
     };
     loadAiSettings();
+  }, []);
+
+  useEffect(() => {
+    const loadSettings = async () => {
+      
+      const result = await chrome.storage.local.get(['mcpServerUrl', 'mcpServerList']);
+      if (result.mcpServerList) {
+        const enabledServers = result.mcpServerList
+          .filter((server: { url: string; enabled: boolean }) => server.enabled)
+          .map((server: { url: string; enabled: boolean }) => ({ url: server.url }
+          ));
+
+        
+       await enabledServers.map(async (server: { url: string }) => {
+          const transport = new StreamableHTTPClientTransport(
+            new URL(server.url)
+          );
+          const client= await experimental_createMCPClient({
+            transport,
+          });
+          const tool = await client.tools();
+          console.log(tool)
+          setTools((prev:any)=>({...prev,...tool}))
+        })
+        
+      }
+
+     
+      
+    };
+
+    loadSettings();
   }, []);
 
   // Add new function to fetch page content
@@ -82,7 +117,11 @@ export function ChatWindow({ repoOwner, repoName, defaultBranch,onClose,showSett
       const { text } = await generateText({
         model: aiClient,
         prompt: prompt,
+        tools: tools,
+        maxSteps: 10
       });
+
+      console.log(text)
 
       setChatHistory(prev => [...prev, { text, isUser: false }]);
     } catch (error) {
@@ -184,6 +223,7 @@ export function ChatWindow({ repoOwner, repoName, defaultBranch,onClose,showSett
               Include page
             </label>
         {page}
+       
       </div>
     </div>
   );

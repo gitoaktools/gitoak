@@ -32,18 +32,23 @@ Pull Request:
 
 ![](./public/demo/ui-bookmark-06.png)
 
+Streamable HTTP MCP Server support:
+
+![](./public/demo/ui-bookmark-07.png)
 
 ### Update log:
 
- 20250408: Add pull request quick summary.
+ 20250411:  Streamable HTTP MCP Server supported.
+
+ 20250408:  Add pull request quick summary.
 
  20250402:  Add AI chat support, all configs are stored in Chrome localStorage 'aiSettings'".
 
- 20250322: Add issue,pull request bookmark support, add bookmark filter.
+ 20250322:  Add issue,pull request bookmark support, add bookmark filter.
 
- 20250312: Add bookmark, only support localstoarge.
+ 20250312:  Add bookmark, only support localstoarge.
 
- 20250311: Update source code.
+ 20250311:  Update source code.
 
 
 ### How to use gitoak?

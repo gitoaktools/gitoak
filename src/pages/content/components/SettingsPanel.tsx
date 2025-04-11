@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Github,Trash2 } from 'lucide-react';
 import AISettingsPanel from './AISettings';
+import MCPSettingsPanel from './MCPSettingsPanel';
 
 export default function SettingsPanel() {
   const [showSidebarOnHover, setShowSidebarOnHover] = useState(false);
@@ -200,6 +201,7 @@ export default function SettingsPanel() {
       )}
 
       <AISettingsPanel />
+      <MCPSettingsPanel />
       </div>
     </div>
   );

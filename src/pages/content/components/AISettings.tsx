@@ -6,6 +6,8 @@ import OllamaSettingsPanel from './aiproviders/Ollama';
 import { AIProviderSettings } from '../utils/ai';
 import GroqSettingsPanel from './aiproviders/Groq';
 
+import {Sparkles} from 'lucide-react';
+
 interface AISettings {
   provider: Provider;
   settings:AIProviderSettings;
@@ -58,7 +60,10 @@ export default function AISettingsPanel() {
           onClick={() => setIsExpanded(!isExpanded)}
           className="flex items-center justify-between w-full text-lg font-medium mb-4 hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-md"
         >
-          <h2>AI Settings</h2>
+          <div className="flex items-center">
+            <Sparkles className="w-4 h-4 mr-2" />
+            <h4>LLM Provider</h4>
+          </div>
           <span className="transform transition-transform duration-200" style={{ 
             transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)'
           }}>
