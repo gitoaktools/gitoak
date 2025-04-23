@@ -10,6 +10,12 @@ gitoak  is a free file tree extension for GitHub, available on Chrome, Firefox a
 
 
 
+You can download Gitoak your browser from
+
+[![Chrome](public/demo/chrome.png "Chrome")](https://chromewebstore.google.com/detail/gitoak/ehpohmelcinbmpleebjolcncnbmplegm)
+
+
+
 Gitoak UI Demo:
 
 ![](./public/demo/ui-bookmark-01.png)
